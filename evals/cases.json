@@ -1,0 +1,82 @@
+[
+  {
+    "id": "python313",
+    "question": "Does Python 3.13 run Python threads on multiple CPU cores by default? Explain the normal CPython build, the optional free-threaded build, and what happens when importing a C extension that is not marked compatible. Keep the answer specific to Python 3.13.",
+    "checks": [
+      "Default CPython 3.13 still has the GIL",
+      "Free-threading is an optional experimental build in 3.13",
+      "Free-threaded Python can execute Python threads in parallel",
+      "An unmarked C extension can re-enable the GIL with a warning",
+      "Does not confuse the 3.14 support status with 3.13"
+    ]
+  },
+  {
+    "id": "sqlite_nfs",
+    "question": "We want applications on two different machines to share one SQLite database file over NFS. Would enabling WAL make this a safe, supported design? Explain reader/writer concurrency, the filesystem constraint, and the durability tradeoff of synchronous=NORMAL versus FULL. Suggest a supported architecture.",
+    "checks": [
+      "Rejects multi-host WAL over NFS",
+      "Explains shared-memory/same-host requirement",
+      "Readers can overlap one writer, not multiple concurrent writers",
+      "NORMAL in WAL preserves consistency but may lose recent committed transactions after power loss",
+      "FULL adds commit synchronization for durability",
+      "Suggests a server owning a local database or a client-server database"
+    ],
+    "clarify_expected": false
+  },
+  {
+    "id": "spark_memory",
+    "question": "I've heard connecting two NVIDIA DGX Sparks gives every application one transparent 256 GB unified-memory pool. Is that accurate? Explain per-system memory, the interconnect, and what software must do to run a model larger than one system can hold. Prefer NVIDIA technical documentation and distinguish aggregate capacity from transparent memory sharing.",
+    "checks": [
+      "128 GB unified CPU/GPU memory per Spark",
+      "Distinguishes 256 GB aggregate from a transparent single-node address space",
+      "Identifies ConnectX-7 network interconnect",
+      "Distributed/sharded execution requires supporting software and configuration",
+      "Does not claim every application automatically gains access to 256 GB",
+      "Does not mistake the link for NVLink or local memory bandwidth"
+    ]
+  },
+  {
+    "id": "rag_paper",
+    "question": "In the original 2020 paper Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks, how do RAG-Sequence and RAG-Token differ in their use of retrieved documents? Which Wikipedia snapshot and passage sizes/count were used, and was the document encoder updated during fine-tuning? Cite the original paper rather than relying on modern tutorials.",
+    "checks": [
+      "RAG-Sequence uses one latent document for the whole output sequence",
+      "RAG-Token can use a different latent document per token",
+      "December 2018 Wikipedia snapshot",
+      "100-word non-overlapping passages, roughly 21 million documents",
+      "Document encoder and index fixed during training",
+      "Query encoder and generator fine-tuned"
+    ]
+  },
+  {
+    "id": "rp2040_dma",
+    "question": "On the Raspberry Pi RP2040, how does DMA channel chaining work? Which register field configures it, how wide is that field, and how do you turn chaining off for a channel? Cite the RP2040 datasheet.",
+    "checks": [
+      "CHAIN_TO field in the channel's CTRL register",
+      "4-bit field (bits 14:11) naming the channel triggered when this channel completes",
+      "A channel cannot chain to itself; setting CHAIN_TO to the channel's own index disables chaining",
+      "Cites the RP2040 datasheet (a ~640-page PDF), not only forum or blog posts"
+    ],
+    "notes": "Long-PDF case: the answer sits deep in the DMA chapter of a 5 MB, 642-page datasheet."
+  },
+  {
+    "id": "everest_height",
+    "question": "How tall is Mount Everest?",
+    "checks": [
+      "8,848.86 m from the joint China-Nepal announcement of December 2020",
+      "Earlier figures: 8,848 m (mid-1950s Survey of India) and 8,844.43 m (2005 Chinese survey)",
+      "Explains the snow/ice cap versus rock height dispute and different survey dates",
+      "Shows the differing figures with citations (a Disagreements section or an explicit comparison)"
+    ],
+    "notes": "Known-disagreement case: sources give different heights for documented reasons."
+  },
+  {
+    "id": "vague_db",
+    "kind": "clarify_only",
+    "clarify_expected": true,
+    "question": "Which database should I use?",
+    "checks": [
+      "The clarify check asks about workload, scale or platform instead of answering"
+    ],
+    "notes": "Deliberately vague; only the clarification check runs."
+  }
+]
